@@ -1,5 +1,6 @@
 class Player:
     letters = 'ABCDEFGHIJ'
+
     def __init__(self, limit):
         self.position_history = []  # история передвижений
         self.limit = limit  # количество попыток
