@@ -3,7 +3,6 @@ import logging
 class Game:
     def __init__(self, player, treasure_map):
         self.player = player
-        self.letters = 'ABCDEFGHIJ'
         self.treasure_map = treasure_map
         logging.basicConfig(level=logging.INFO, filename="py_log.log", filemode="w",
                             format="%(asctime)s %(levelname)s %(message)s")
@@ -30,37 +29,27 @@ class Game:
                         logging.error("Ошибка! Введите через запятую целое число и букву от A до J")
                         print("Ошибка! Введите через запятую целое число и букву от A до J")
                     else:
-                        try:
-                            x = int(points[0])
+                        point_result = self.player.new_point(points)
+                        if point_result[0] == 0:
+                            logging.error(f"System: {point_result[1]}")
+                            print(point_result[1])
+                        else:
+                            logging.info(f"User: {point_result[1]}")
 
-                            if x < 1 or x > 10:
-                                logging.error("Ошибка! Число должно быть от 1 до 10")
-                                print("Ошибка! Число должно быть от 1 до 10")
-                            else:
-                                if self.letters.find(points[1].upper()) < 0:
-                                    logging.error("Ошибка! Буква должна быть в диапазоне от A до J")
-                                    print("Ошибка! Буква должна быть в диапазоне от A до J")
-                                else:
-                                    y = points[1].upper()
-                                    self.player.new_point(x, y)
-                                    logging.info(f"User: Введены координаты ({x}, {y})")
-                                    point_res = self.treasure_map.check_position(x, y)
-                                    logging.info(f"System: {point_res}")
-                                    print(point_res)
-                                    if self.player.attempt == self.player.limit:
-                                        logging.info("System: Игра завершена")
-                                        print('Количество попыток исчерпано. Сокровище не найдено.')
-
-                        except ValueError:
-                            print("Ошибка! Первым должно идти целое число")
+                        if point_result[0] == 1:
+                            pos = self.player.position_history[-1]
+                            point_res = self.treasure_map.check_position(pos[0], pos[1])
+                            logging.info(f"System: {point_res}")
+                            self.print_step(point_res)
+                            if self.player.attempt == self.player.limit:
+                                logging.info("System: Игра завершена")
+                                print('Количество попыток исчерпано. Сокровище не найдено.')
                 elif choise == 2:
                     self.visual_map()
                 elif choise == 0:
                     break
             except ValueError:
                 print('Ошибка! Введите число')
-
-
 
     def visual_map(self):
         visual = ''
@@ -76,5 +65,8 @@ class Game:
             visual += f' {chr(i)} '
         visual += '\n\n'
         print(visual)
+
+    def print_step(self, info):
+        print(info)
 
 
