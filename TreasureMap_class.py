@@ -13,17 +13,17 @@ class TreasureMap:
         if pos_x != self.x:
             if ord(pos_y) != ord(self.y):
                 if abs(pos_x - self.x) <= 3 and abs(ord(pos_y) - ord(self.y)) <= 3:
-                    return ('Вы близко к сокровищу!')
+                    return [1, 'Вы близко к сокровищу!']
                 else:
-                    return ("Вы пока не нашли сокровище")
+                    return [0, "Вы пока не нашли сокровище"]
             else:
-                return ('Вы близко к сокровищу!')
+                return [1, 'Вы близко к сокровищу!']
         else:
             if ord(pos_y) == ord(self.y):
-                return f'Поздравляем! Игра завершена. Сокровище найдено. \n Ваш промокод SUPER100'
+                return [2, 'Поздравляем! Игра завершена. Сокровище найдено. \n Ваш промокод SUPER100']
             elif abs(ord(pos_y) - ord(self.y)) <= 3:
-                return ('Вы близко к сокровищу!')
+                return [1, 'Вы близко к сокровищу!']
             else:
-                return("Вы пока не нашли сокровище")
+                return [0, "Вы пока не нашли сокровище"]
 
 

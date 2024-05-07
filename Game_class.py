@@ -1,5 +1,6 @@
 import logging
 
+
 class Game:
     def __init__(self, player, treasure_map):
         self.player = player
@@ -38,12 +39,15 @@ class Game:
 
                         if point_result[0] == 1:
                             pos = self.player.position_history[-1]
-                            point_res = self.treasure_map.check_position(pos[0], pos[1])
+                            point_status, point_res = self.treasure_map.check_position(pos[0], pos[1])
                             logging.info(f"System: {point_res}")
-                            self.print_step(point_res)
-                            if self.player.attempt == self.player.limit:
-                                logging.info("System: Игра завершена")
-                                print('Количество попыток исчерпано. Сокровище не найдено.')
+                            if point_status == 2:
+                                return point_res
+                            else:
+                                self.print_step(point_res)
+                                if self.player.attempt == self.player.limit:
+                                    logging.info("System: Игра завершена")
+                                    return 'Количество попыток исчерпано. Сокровище не найдено.'
                 elif choise == 2:
                     self.visual_map()
                 elif choise == 0:

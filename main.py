@@ -9,4 +9,4 @@ if __name__ == '__main__':
     new_game = Game(new_player, new_map)
 
 
-    new_game.game_start()
+    print(new_game.game_start())
